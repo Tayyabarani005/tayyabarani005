@@ -1,0 +1,20 @@
+name: Metrics
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # runs once a day, refreshing your real numbers
+  workflow_dispatch:        # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: urmzd/github-insights@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sections: rhythm
+          readme-path: none   # we only want the SVG, not a full generated README
